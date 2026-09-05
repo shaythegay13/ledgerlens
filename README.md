@@ -178,6 +178,18 @@ The test suite covers the deterministic engine, the fact-ledger and validation r
 
 ---
 
+## Contributing
+
+Changes go through a pull request — prelint reviews PRs, and work pushed straight to `master` is never seen by it.
+
+```bash
+git checkout -b my-change
+npm test && npm run build
+git push -u origin my-change   # then open the PR from the link git prints
+```
+
+---
+
 ## Project structure
 
 ```
