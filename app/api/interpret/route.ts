@@ -21,8 +21,8 @@ export async function POST(request: Request) {
     const body = await request.json() as { analysis?: unknown };
     if (!isAnalysis(body.analysis)) return NextResponse.json({ error: "Analyze at least one material change before requesting an AI explanation." }, { status: 400 });
     input = createModelInput(body.analysis);
-    const { report, attempts } = await generateLedgerLensReport(input, provider);
-    try { await emitPrismTrace({ model: provider.modelId, provider: provider.id, input, output: report, latencyMs: Math.round(performance.now() - startedAt), sessionId, attempts }); } catch (traceError) { console.error("LedgerLens PRISM trace emission failed", traceError instanceof Error ? traceError.message : "Unknown PRISM error"); }
+    const { report, attempts, usage } = await generateLedgerLensReport(input, provider);
+    try { await emitPrismTrace({ model: provider.modelId, provider: provider.id, input, output: report, latencyMs: Math.round(performance.now() - startedAt), sessionId, attempts, inputTokens: usage.inputTokens, outputTokens: usage.outputTokens }); } catch (traceError) { console.error("LedgerLens PRISM trace emission failed", traceError instanceof Error ? traceError.message : "Unknown PRISM error"); }
     return NextResponse.json({ report });
   } catch (error) {
     try { await emitPrismTrace({ model: provider.modelId, provider: provider.id, input, output: { status: "error" }, latencyMs: Math.round(performance.now() - startedAt), sessionId, error: error instanceof Error ? error.message : "Unknown analysis error" }); } catch (traceError) { console.error("LedgerLens PRISM trace emission failed", traceError instanceof Error ? traceError.message : "Unknown PRISM error"); }

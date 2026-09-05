@@ -6,6 +6,8 @@ type PrismTrace = {
   latencyMs: number;
   sessionId: string;
   attempts?: number;
+  inputTokens?: number;
+  outputTokens?: number;
   error?: string;
 };
 
@@ -25,6 +27,8 @@ export async function emitPrismTrace(trace: PrismTrace): Promise<void> {
       output_message: JSON.stringify(trace.output),
       latency_ms: trace.latencyMs,
       session_id: trace.sessionId,
+      token_count_input: trace.inputTokens,
+      token_count_output: trace.outputTokens,
       metadata: { application: "LedgerLens", route: "/api/interpret", provider: trace.provider, attempts: trace.attempts, error: trace.error }
     })
   });

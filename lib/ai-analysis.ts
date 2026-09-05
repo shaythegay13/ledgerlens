@@ -29,6 +29,12 @@ Write descriptively, never causally. Never use any of these words or phrases in 
 // (the Groq free tier): each driver contributes its
 // largest row per period. The UI still renders every supporting transaction from the
 // deterministic analysis, so nothing the user sees depends on this cap.
+// Percentages are rounded in the ledger only. Raw floats such as 17.115384615384617 are
+// indistinguishable from a card number to automated PII scanners and waste tokens; the UI
+// renders every displayed figure from the deterministic analysis, not from this ledger.
+const roundPercent = (value: number) => Math.round(value * 100) / 100;
+const roundOptionalPercent = (value: number | null) => value === null ? null : roundPercent(value);
+
 function representativeRows(transactions: Transaction[]): Transaction[] {
   const largest = (period: "A" | "B") => transactions.filter(transaction => transaction.period === period).sort((a, b) => Math.abs(b.amount) - Math.abs(a.amount))[0];
   return [largest("A"), largest("B")].filter((transaction): transaction is Transaction => Boolean(transaction));
@@ -41,11 +47,11 @@ export function createModelInput(analysis: Analysis): ModelInput {
     const drivers = insight.drivers.map(driver => {
       const rows = representativeRows(driver.transactions);
       rows.forEach(transaction => evidence.push({ id: `transaction-${transaction.transactionId}`, changeId: id, date: transaction.date, counterparty: transaction.counterparty, category: transaction.category, amount: transaction.amount, sourceFile: transaction.sourceFile, sourceRow: transaction.sourceRow }));
-      return { counterparty: driver.counterparty, change: driver.change, contributionPercent: driver.contributionPercent, evidenceIds: rows.map(transaction => `transaction-${transaction.transactionId}`) };
+      return { counterparty: driver.counterparty, change: driver.change, contributionPercent: roundPercent(driver.contributionPercent), evidenceIds: rows.map(transaction => `transaction-${transaction.transactionId}`) };
     });
-    return { id, category: insight.variance.category, kind: /revenue|sales|income/i.test(insight.variance.category) ? "revenue" : "expense", periodA: insight.variance.periodA, periodB: insight.variance.periodB, change: insight.variance.change, percentChange: insight.variance.percentChange, confidence: insight.confidence, drivers };
+    return { id, category: insight.variance.category, kind: /revenue|sales|income/i.test(insight.variance.category) ? "revenue" : "expense", periodA: insight.variance.periodA, periodB: insight.variance.periodB, change: insight.variance.change, percentChange: roundOptionalPercent(insight.variance.percentChange), confidence: insight.confidence, drivers };
   });
-  return { periods: { periodA: "Period A", periodB: "Period B" }, overall: analysis.totals, materialChanges, evidence, businessContext: analysis.appliedMemories.map(memory => ({ subject: memory.subject, fact: memory.fact, source: memory.source })) };
+  return { periods: { periodA: "Period A", periodB: "Period B" }, overall: { ...analysis.totals, percentChange: roundOptionalPercent(analysis.totals.percentChange) }, materialChanges, evidence, businessContext: analysis.appliedMemories.map(memory => ({ subject: memory.subject, fact: memory.fact, source: memory.source })) };
 }
 
 export function validateAiAnalysis(value: unknown, input: ModelInput): AiAnalysisReport {
