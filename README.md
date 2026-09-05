@@ -2,7 +2,7 @@
 
 **An AI financial investigator that tells you what changed, determines why it changed, and shows the transactions behind the answer.**
 
-Built for the MAXIMOR Money Operations track — prompt: *Explain the Change*.
+Built by **Shay Bouchles** for the MAXIMOR Money Operations track — prompt: *Explain the Change*.
 
 Financial reports are good at telling you that numbers moved. Figuring out *why* still means opening transaction exports, grouping customers and vendors, hunting for outliers, and writing the narrative by hand. LedgerLens automates that investigation — and remembers how your business works, so every run is better informed than the last.
 
@@ -210,3 +210,9 @@ See [`docs/STATUS.md`](docs/STATUS.md) for current detail and [`docs/PRD.md`](do
 ## Non-goals
 
 LedgerLens is an analysis and explanation system, not an autonomous accounting system. It does not move money, execute transactions, modify accounting records, or provide tax advice — and it does not present uncertain explanations as fact.
+
+---
+
+## Author
+
+**Shay Bouchles** — [@shaythegay13](https://github.com/shaythegay13)
