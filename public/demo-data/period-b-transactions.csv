@@ -1,0 +1,33 @@
+Date,Description,Amount,Category,Counterparty
+2026-07-01,Acme Corp platform subscription - July,15000,Enterprise Revenue,Acme Corp
+2026-07-01,Acme Corp additional seat licenses - July,12000,Enterprise Revenue,Acme Corp
+2026-07-02,Globex platform subscription - July,21000,Enterprise Revenue,Globex
+2026-07-02,Stark Industries platform subscription - July,16000,Enterprise Revenue,Stark Industries
+2026-07-03,Wayne Enterprises platform subscription - July,18800,Enterprise Revenue,Wayne Enterprises
+2026-07-03,Initech platform subscription - July,16500,Enterprise Revenue,Initech
+2026-07-04,Umbrella Logistics platform subscription - July,13000,Enterprise Revenue,Umbrella Logistics
+2026-07-06,Acme Corp expanded usage tier - July,13000,Enterprise Revenue,Acme Corp
+2026-07-07,Globex additional region add-on - July,8000,Enterprise Revenue,Globex
+2026-07-08,Stark Industries premium support tier - July,6000,Enterprise Revenue,Stark Industries
+2026-07-09,Soylent Foods platform subscription - July,3000,Enterprise Revenue,Soylent Foods
+2026-07-05,Bluebird Studio monthly plan,10500,SMB Revenue,Bluebird Studio
+2026-07-05,Cedar Dental monthly plan,7500,SMB Revenue,Cedar Dental
+2026-07-06,Harbor Fitness monthly plan,6700,SMB Revenue,Harbor Fitness
+2026-07-07,Nimbus Design monthly plan,7000,SMB Revenue,Nimbus Design
+2026-07-08,Pinecrest Realty monthly plan,6800,SMB Revenue,Pinecrest Realty
+2026-07-09,Riverbend Tutors monthly plan,6600,SMB Revenue,Riverbend Tutors
+2026-07-09,Summit Pet Care monthly plan,7200,SMB Revenue,Summit Pet Care
+2026-07-10,Vista Landscaping monthly plan,6000,SMB Revenue,Vista Landscaping
+2026-07-11,AWS compute and storage - July,-22000,Software,Amazon Web Services
+2026-07-11,AWS data transfer - July,-5000,Software,Amazon Web Services
+2026-07-12,GitHub Enterprise seats,-3000,Software,GitHub
+2026-07-12,Datadog monitoring,-2900,Software,Datadog
+2026-07-13,Figma design seats,-1200,Software,Figma
+2026-07-13,Slack workspace,-1300,Software,Slack
+2026-07-14,AWS reserved capacity purchase - July,-4000,Software,Amazon Web Services
+2026-07-15,Northstar Agency retainer,-18000,Marketing,Northstar Agency
+2026-07-16,Google Ads spend,-6200,Marketing,Google Ads
+2026-07-16,LinkedIn Ads spend,-2800,Marketing,LinkedIn Ads
+2026-07-18,BuildCo engineering sprint invoice,-8000,Contractors,BuildCo Engineering
+2026-07-20,Halcyon data pipeline contract - final,-2400,Contractors,Halcyon Data Contractors
+2026-07-22,Meridian QA testing contract,-2000,Contractors,Meridian QA Services

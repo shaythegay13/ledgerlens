@@ -25,4 +25,5 @@ export type Analysis = {
   summary: string;
   appliedMemories: MemoryFact[];
 };
-export type MemoryFact = { id: string; type: "vendor_classification"; subject: string; fact: string; source: "user_confirmed"; createdAt: string };
+export type MemoryType = "vendor_classification" | "customer_classification" | "company_terminology" | "recurring_financial_event" | "known_business_event" | "user_correction";
+export type MemoryFact = { id: string; type: MemoryType; subject: string; fact: string; source: "user_confirmed" | "inferred"; createdAt: string };

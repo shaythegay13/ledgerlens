@@ -1,0 +1,31 @@
+Date,Description,Amount,Category,Counterparty
+2026-06-01,Acme Corp platform subscription - June,15000,Enterprise Revenue,Acme Corp
+2026-06-01,Acme Corp additional seat licenses - June,12000,Enterprise Revenue,Acme Corp
+2026-06-02,Globex platform subscription - June,21000,Enterprise Revenue,Globex
+2026-06-02,Stark Industries platform subscription - June,16000,Enterprise Revenue,Stark Industries
+2026-06-03,Wayne Enterprises platform subscription - June,14000,Enterprise Revenue,Wayne Enterprises
+2026-06-03,Initech platform subscription - June,12000,Enterprise Revenue,Initech
+2026-06-04,Umbrella Logistics platform subscription - June,10000,Enterprise Revenue,Umbrella Logistics
+2026-06-05,Bluebird Studio monthly plan,9000,SMB Revenue,Bluebird Studio
+2026-06-05,Cedar Dental monthly plan,7500,SMB Revenue,Cedar Dental
+2026-06-06,Harbor Fitness monthly plan,8200,SMB Revenue,Harbor Fitness
+2026-06-06,Lakeside Books monthly plan,6300,SMB Revenue,Lakeside Books
+2026-06-07,Nimbus Design monthly plan,7000,SMB Revenue,Nimbus Design
+2026-06-08,Pinecrest Realty monthly plan,6800,SMB Revenue,Pinecrest Realty
+2026-06-08,Quartz Coffee monthly plan,5400,SMB Revenue,Quartz Coffee
+2026-06-09,Riverbend Tutors monthly plan,6600,SMB Revenue,Riverbend Tutors
+2026-06-09,Summit Pet Care monthly plan,7200,SMB Revenue,Summit Pet Care
+2026-06-10,Vista Landscaping monthly plan,6000,SMB Revenue,Vista Landscaping
+2026-06-11,AWS compute and storage - June,-7000,Software,Amazon Web Services
+2026-06-11,AWS data transfer - June,-3000,Software,Amazon Web Services
+2026-06-12,GitHub Enterprise seats,-3000,Software,GitHub
+2026-06-12,Datadog monitoring,-2500,Software,Datadog
+2026-06-13,Figma design seats,-1200,Software,Figma
+2026-06-13,Slack workspace,-1300,Software,Slack
+2026-06-15,Northstar Agency retainer,-12000,Marketing,Northstar Agency
+2026-06-16,Google Ads spend,-4000,Marketing,Google Ads
+2026-06-16,LinkedIn Ads spend,-2000,Marketing,LinkedIn Ads
+2026-06-18,BuildCo engineering sprint invoice 1,-10000,Contractors,BuildCo Engineering
+2026-06-20,Halcyon data pipeline contract,-7000,Contractors,Halcyon Data Contractors
+2026-06-22,Meridian QA testing contract,-5000,Contractors,Meridian QA Services
+2026-06-25,BuildCo engineering sprint invoice 2,-8000,Contractors,BuildCo Engineering

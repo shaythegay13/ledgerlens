@@ -1,15 +1,13 @@
 import { NextResponse } from "next/server";
+import { getRelevantBusinessMemory, saveBusinessMemory } from "../../../lib/business-memory";
+import type { MemoryType } from "../../../lib/types";
 
-const config = () => ({ url: process.env.NEXT_PUBLIC_SUPABASE_URL, key: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY });
-export async function GET() {
-  const { url, key } = config(); if (!url || !key) return NextResponse.json({ configured: false, memories: [] });
-  const response = await fetch(`${url}/rest/v1/business_memory?select=*&order=created_at.asc`, { headers: { apikey: key, Authorization: `Bearer ${key}` }, cache: "no-store" });
-  if (!response.ok) return NextResponse.json({ configured: true, error: "Unable to load Supabase Business Memory." }, { status: 502 });
-  return NextResponse.json({ configured: true, memories: await response.json() });
+const types: MemoryType[] = ["vendor_classification", "customer_classification", "company_terminology", "recurring_financial_event", "known_business_event", "user_correction"];
+export async function GET(request: Request) {
+  try { const subjects = new URL(request.url).searchParams.get("subjects")?.split(",") ?? []; return NextResponse.json({ memories: await getRelevantBusinessMemory(subjects) }); }
+  catch (error) { return NextResponse.json({ error: error instanceof Error ? error.message : "Unable to load Supabase Business Memory." }, { status: 503 }); }
 }
 export async function POST(request: Request) {
-  const { url, key } = config(); if (!url || !key) return NextResponse.json({ configured: false }, { status: 503 });
-  const body = await request.json(); const response = await fetch(`${url}/rest/v1/business_memory`, { method: "POST", headers: { apikey: key, Authorization: `Bearer ${key}`, "Content-Type": "application/json", Prefer: "return=representation" }, body: JSON.stringify(body) });
-  if (!response.ok) return NextResponse.json({ configured: true, error: "Unable to save Supabase Business Memory." }, { status: 502 });
-  return NextResponse.json({ configured: true, memory: (await response.json())[0] });
+  try { const body = await request.json() as { type?: MemoryType; subject?: string; fact?: string; source?: "user_confirmed" | "inferred" }; if (!body.type || !types.includes(body.type) || !body.subject || !body.fact || body.source !== "user_confirmed") return NextResponse.json({ error: "A user-confirmed memory type, subject, and fact are required." }, { status: 400 }); return NextResponse.json({ memory: await saveBusinessMemory({ type: body.type, subject: body.subject, fact: body.fact, source: body.source }) }); }
+  catch (error) { return NextResponse.json({ error: error instanceof Error ? error.message : "Unable to save Supabase Business Memory." }, { status: 503 }); }
 }
