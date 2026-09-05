@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "profile": null,
+  "tasks": [
+    {
+      "prompt": "ok, push the .md file to the github repo https://github.com/shaythegay13/ledgerlens.git",
+      "did": "ran Get-ChildItem -Recurse -Filter \"*.md\" |",
+      "files": [],
+      "ts": 1788621196200
+    }
+  ]
+}

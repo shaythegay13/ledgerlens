@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "lessons": [
+    {
+      "id": "l_mtoiln61",
+      "pattern": "tool_not_found",
+      "lesson": "Tool \"find_file\" not found. Use only: read_file, write_to_file, replace_file_content, list_dir, glob_files, grep_files, lookup, read_page.",
+      "frequency": 1,
+      "lastSeen": 1788620728969
+    }
+  ],
+  "skills": [],
+  "metrics": {
+    "totalTasks": 14,
+    "successfulTasks": 13,
+    "avgLoopsPerTask": 1.4,
+    "totalSkillsUsed": 0
+  }
+}

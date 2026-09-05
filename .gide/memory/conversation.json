@@ -1,0 +1,15 @@
+{
+  "goals": [
+    "push the code",
+    "find it?"
+  ],
+  "decisions": [],
+  "preferences": [
+    "dont see anything in the github",
+    "don't know rather than guessing or inventing a command.",
+    "Do NOT retry find_file with the same query — it will not succeed."
+  ],
+  "files": [],
+  "updatedAt": 1788622038664,
+  "sessions": 10
+}
