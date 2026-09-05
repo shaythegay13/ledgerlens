@@ -9,12 +9,33 @@
 - **Business Memory verified live against Supabase through the UI.** Run 1 showed `Software +$21,400`; teaching `Amazon Web Services → Infrastructure` saved to Supabase; run 2 showed `Infrastructure +$21,000`, dropped Software out of the top five, and displayed "Memory applied: Amazon Web Services → Infrastructure." The demo row was deleted afterwards so the two-run demo starts un-reclassified.
 - **The AI provider is configurable.** `AI_PROVIDER` selects the model: `groq` (development default, `openai/gpt-oss-120b`) or `anthropic` (final demo, `claude-sonnet-5`). All provider selection lives in `lib/ai-provider.ts`; nothing else in the codebase branches on provider. Both providers run the identical deterministic pipeline, prompt, structured-output schema, evidence IDs, validation, and Business Memory behavior — only the model changes. Missing or unknown configuration fails loudly with an actionable message; LedgerLens never silently falls back between providers.
 - **Grounded AI interpretation is working on Groq through the provider abstraction.** Two consecutive live `POST /api/interpret` requests returned `200` with validated, evidence-backed reports containing no numeric or causal claims (8.5s on a first-attempt pass; 43s when the repair retry was used).
-- PRISM live HTTP tracing is wired to the real `/api/interpret` call and records the **active provider and model**, compact structured input, validated output or safe error, latency, attempt count, and a LedgerLens session ID. Verified after the provider refactor: the trace emitted successfully on a live request and through `lib/prism.ts` directly.
+- **Claude Sonnet 5 is verified live.** A real `/api/interpret` request returned `200` and passed the full validation gate on the **first attempt** — no repair retry needed. Sonnet 5 correctly identified the churned SMB accounts as having no Period B entry, noted GitHub was unchanged, and raised a `needsContext` question for all five material changes instead of asserting causes. Roughly 30s and ~$0.04 per interpretation.
+- PRISM live HTTP tracing is wired to the real `/api/interpret` call and records the **active provider and model**, compact structured input, validated output or safe error, latency, attempt count, token usage, and a LedgerLens session ID. Verified by reading traces back from the PRISM API: a live Anthropic trace reported 5,603 input / 2,854 output tokens, `cost_usd` 0.0397, and no guardrail flags.
 - Environment configuration is prepared: `.env.example` documents `AI_PROVIDER`, both provider keys, PRISM, and Supabase as placeholders only, and `.env.local` is explicitly git-ignored. Neither API key is exposed to the browser (no `NEXT_PUBLIC_` prefix; both are read server-side only).
+
+## Verified PRISM behavior
+
+Confirmed by querying the PRISM API rather than trusting ingest status codes:
+
+- Token usage is now sent, so PRISM computes real cost. Before this, every trace reported 0 tokens and `$0.00`.
+- Ledger percentages are rounded to two decimals. Unrounded floats such as `17.115384615384617` produced a 17-digit run that PRISM's PII/PHI rule flagged high severity as a credit card, on 9 of 12 traces. No user-visible figure changed, because the UI renders from the deterministic analysis, not the ledger.
+- The traces **list** endpoint returns `metadata: {}` for every trace; the **detail** endpoint (`/api/traces/{id}`) returns it in full (`provider`, `attempts`, `route`, `application`). Metadata is stored correctly — an empty list view is a display quirk, not a dropped field.
+- PRISM enriches traces server-side with regulatory scoring, entity extraction, and response-quality evaluation.
+
+## Prelint
+
+Prelint is a GitHub integration that reviews **pull requests**. Work pushed directly to `master` is never seen by it. Use a branch and a PR for each change so prelint can review it:
+
+```
+git checkout -b <branch>
+# ...commit work...
+git push -u origin <branch>
+```
+
+Then open the PR from the link git prints.
 
 ## In Progress
 
-- **Anthropic path is configured and compiles, but has never made a live request** — no `ANTHROPIC_API_KEY` exists on this machine yet. Everything else is in place: `@ai-sdk/anthropic@4.0.49` is installed (same major line as `@ai-sdk/groq@4.0.37`, both pair with `ai@7`), the provider resolves `claude-sonnet-5`, and the provider's structured-output support was confirmed by inspection (native `output_format` under `auto` mode, with a JSON-tool fallback), so `Output.object` needs no extra configuration.
 - Groq wording compliance is intermittent. `openai/gpt-oss-120b` still sometimes reaches for banned causal phrasing ("reflecting", "due to"); the single repair retry recovers it, but a run can still fail twice. Claude Sonnet 5 is expected to follow the constraint more reliably, which is a second reason to record the final demo on Anthropic.
 
 ## Not Started
@@ -55,4 +76,4 @@ It prints the active provider and model before calling it, then prints the valid
 
 ## Next Priority
 
-Return to P0 feature work. The AI provider abstraction is complete; the remaining P0 gap is a single live Anthropic smoke test once a key is available (one command, above).
+Confirm prelint is installed on the GitHub repository and reviews an open pull request. All P0 functionality is verified: upload, deterministic analysis, evidence, follow-up Q&A, Business Memory across runs, grounded AI explanation on both providers, and live PRISM traces with cost.
